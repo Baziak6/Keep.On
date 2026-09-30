@@ -9,7 +9,6 @@ import android.os.*
 import android.provider.Settings
 import android.view.Gravity
 import android.widget.*
-import androidx.annotation.RequiresApi
 
 class MainActivity : Activity() {
     private lateinit var status: TextView
@@ -34,7 +33,6 @@ class MainActivity : Activity() {
         else { ModeStore.setActive(this); startForegroundService(Intent(this,CookingService::class.java)) }
         updateStatus(); CookingTileService.refresh(this)
     }
-    @RequiresApi(33)
 private fun requestAddTile() {
 val statusBarManager = getSystemService(StatusBarManager::class.java)
 
