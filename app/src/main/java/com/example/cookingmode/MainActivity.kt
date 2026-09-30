@@ -3,6 +3,7 @@ package com.example.cookingmode
 import android.app.*
 import android.content.*
 import android.graphics.Color
+import android.graphics.drawable.Icon
 import android.net.Uri
 import android.os.*
 import android.provider.Settings
@@ -32,5 +33,24 @@ class MainActivity : Activity() {
         else { ModeStore.setActive(this); startForegroundService(Intent(this,CookingService::class.java)) }
         updateStatus(); CookingTileService.refresh(this)
     }
-    @RequiresApi(33) private fun requestAddTile(){ getSystemService(StatusBarManager::class.java).requestAddTileService(android.content.ComponentName(this,CookingTileService::class.java),"Cooking Mode",android.graphics.drawable.Icon.createWithResource(this,R.drawable.ic_cooking),mainExecutor){ } }
+    @RequiresApi(33)
+private fun requestAddTile() {
+val statusBarManager = getSystemService(StatusBarManager::class.java)
+
+statusBarManager.requestAddTileService(
+ComponentName(this, CookingTileService::class.java),
+"Cooking Mode",
+Icon.createWithResource(this, android.R.drawable.ic_menu_view),
+mainExecutor
+) { result ->
+Toast.makeText(
+this,
+if (result == StatusBarManager.TILE_ADD_REQUEST_RESULT_TILE_ADDED)
+"Cooking Mode added to Quick Settings"
+else
+"You can add Cooking Mode from Quick Settings → Edit",
+Toast.LENGTH_LONG
+).show()
+}
+}
 }
