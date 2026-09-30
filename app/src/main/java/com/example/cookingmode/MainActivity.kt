@@ -9,6 +9,7 @@ import android.os.*
 import android.provider.Settings
 import android.view.Gravity
 import android.widget.*
+import androidx.annotation.RequiresApi
 
 class MainActivity : Activity() {
     private lateinit var status: TextView
